@@ -8,7 +8,9 @@ import {
   TOKENS_BALANCE_ID,
   TOKENS_BALANCE_TYPE,
   PENDING_POOLS_AUTO_BALANCES_ID,
-  PENDING_POOLS_AUTO_BALANCES_TYPE
+  PENDING_POOLS_AUTO_BALANCES_TYPE,
+  STAKED_POOLS_WANT_TOKENS_ID,
+  STAKED_POOLS_WANT_TOKENS_TYPE
 } from './constants';
 import { ProviderLike } from './providers';
 import type { BalanceMap, EthScanOptions } from './types';
@@ -128,8 +130,7 @@ export const getPendingPoolsAUTOBalances = async (
 };
 
 /**
- * Get the ERC-20 token balance of the tokens with the addresses `tokenAddresses` for the single
- * address specified.
+ * Get the pending AUTO token balances for multiple pools, for single address.
  *
  * @param {ProviderLike} provider
  * @param {string} address
@@ -147,6 +148,53 @@ export const getPendingPoolsAUTOBalance = (
     provider,
     pids,
     (batch) => withId(PENDING_POOLS_AUTO_BALANCES_ID, encode(PENDING_POOLS_AUTO_BALANCES_TYPE, [address, batch])),
+    options
+  );
+};
+
+/**
+ * Get the staked token balances for multiple pools, for multiple addresses.
+ *
+ * @param {ProviderLike} provider
+ * @param {string[]} addresses
+ * @param {string[]} tokenAddresses
+ * @param {EthScanOptions} options
+ * @return {Promise<BalanceMap<BalanceMap>>}
+ */
+export const getStakedPoolsWantTokensBalances = async (
+  provider: ProviderLike,
+  addresses: string[],
+  pids: number[],
+  options?: EthScanOptions
+): Promise<BalanceMap<BalanceMap>> => {
+  const balances = await Promise.all(
+    addresses.map(async (address) =>
+      Object.values(await getStakedPoolsWantTokensBalance(provider, address, pids, options))
+    )
+  );
+
+  return toNestedBalanceMap(addresses, pids, balances);
+};
+
+/**
+ * Get the staked token balances for multiple pools, for single address.
+ *
+ * @param {ProviderLike} provider
+ * @param {string} address
+ * @param {string[]} tokenAddresses
+ * @param {EthScanOptions} options
+ * @return {Promise<BalanceMap>}
+ */
+export const getStakedPoolsWantTokensBalance = (
+  provider: ProviderLike,
+  address: string,
+  pids: number[],
+  options?: EthScanOptions
+): Promise<BalanceMap> => {
+  return callSingle(
+    provider,
+    pids,
+    (batch) => withId(STAKED_POOLS_WANT_TOKENS_ID, encode(STAKED_POOLS_WANT_TOKENS_TYPE, [address, batch])),
     options
   );
 };

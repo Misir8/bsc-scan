@@ -26,7 +26,13 @@ export const TOKENS_BALANCES_ID = '06187b4f';
 export const TOKENS_BALANCES_TYPE: ['address[]', 'address[]'] = ['address[]', 'address[]'];
 
 /**
- * pendingPoolsAUTOBalances(address[],address[])
+ * pendingPoolsAUTOBalance(address[],address[])
  */
 export const PENDING_POOLS_AUTO_BALANCES_ID = 'b8e42955';
 export const PENDING_POOLS_AUTO_BALANCES_TYPE: ['address', 'uint256[]'] = ['address', 'uint256[]'];
+
+/**
+ * stakedPoolsWantTokens(address[],address[])
+ */
+export const STAKED_POOLS_WANT_TOKENS_ID = 'a03763a0';
+export const STAKED_POOLS_WANT_TOKENS_TYPE: ['address', 'uint256[]'] = ['address', 'uint256[]'];
