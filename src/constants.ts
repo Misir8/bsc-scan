@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0x7E9f1Ee1905B5Bde9522c20bbb78bAbe3c3FB4ca';
+export const CONTRACT_ADDRESS = '0xe92c2c9ca4782ee5bfd3ca3848249c1c4cba5cf8';
 export const BATCH_SIZE = 1000;
 
 /**
@@ -24,3 +24,9 @@ export const TOKENS_BALANCE_TYPE: ['address', 'address[]'] = ['address', 'addres
  */
 export const TOKENS_BALANCES_ID = '06187b4f';
 export const TOKENS_BALANCES_TYPE: ['address[]', 'address[]'] = ['address[]', 'address[]'];
+
+/**
+ * pendingPoolsAUTOBalances(address[],address[])
+ */
+export const PENDING_POOLS_AUTO_BALANCES_ID = 'b8e42955';
+export const PENDING_POOLS_AUTO_BALANCES_TYPE: ['address', 'uint256[]'] = ['address', 'uint256[]'];

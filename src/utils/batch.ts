@@ -15,19 +15,19 @@ export const chunk = <T>(input: T[], size: number): T[][] => {
 /**
  * Batch the function calls to `handler` per `size` items.
  *
- * @param {(addresses: string[]) => Promise<BigNumber[]>} handler A function that takes a batch of addresses and returns the balance for the addresses.
+ * @param {(addresses: string[] | number[]) => Promise<BigNumber[]>} handler A function that takes a batch of addresses and returns the balance for the addresses.
  * @param {number} size The size of the batches.
- * @param {string[]} addresses The addresses to batch.
+ * @param {string[] | number[]} addresses The addresses to batch.
  * @return {Promise<BigNumber[]>} A promise with the balances.
  */
 export const batch = async <T = bigint>(
-  handler: (addresses: string[]) => Promise<T[]>,
+  handler: (addresses: string[] | number[]) => Promise<T[]>,
   size: number,
-  addresses: string[]
+  addresses: string[] | number[]
 ): Promise<T[]> => {
-  const chunks = chunk(addresses, size);
+  const chunks = chunk(addresses as any, size);
 
   return chunks.reduce<Promise<T[]>>(async (current, next) => {
-    return Promise.resolve([...(await current), ...(await handler(next))]);
+    return Promise.resolve([...(await current), ...(await handler(next as string[]))]);
   }, Promise.resolve<T[]>([]));
 };

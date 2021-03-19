@@ -11,7 +11,7 @@ import { batch } from './utils';
  * @param {bigint[]} balances
  * @return {BalanceMap}
  */
-export const toBalanceMap = (addresses: string[], balances: Array<bigint>): BalanceMap => {
+export const toBalanceMap = (addresses: string[] | number[], balances: Array<bigint>): BalanceMap => {
   return balances.reduce<BalanceMap>((current, next, index) => {
     return {
       ...current,
@@ -29,7 +29,7 @@ export const toBalanceMap = (addresses: string[], balances: Array<bigint>): Bala
  */
 export const toNestedBalanceMap = (
   addresses: string[],
-  tokenAddresses: string[],
+  tokenAddresses: string[] | number[],
   balances: Array<Array<bigint>>
 ): BalanceMap<BalanceMap> => {
   return balances.reduce<BalanceMap<BalanceMap>>((current, next, index) => {
@@ -51,15 +51,15 @@ export const toNestedBalanceMap = (
  */
 export const callSingle = async (
   provider: ProviderLike,
-  addresses: string[],
-  encodeData: (addresses: string[]) => string,
+  addresses: string[] | number[],
+  encodeData: (addresses: string[] | number[]) => string,
   options?: EthScanOptions
 ): Promise<BalanceMap> => {
   const contractAddress = options?.contractAddress ?? CONTRACT_ADDRESS;
   const batchSize = options?.batchSize ?? BATCH_SIZE;
 
   const result = await batch(
-    async (batchedAddresses: string[]) => {
+    async (batchedAddresses: string[] | number[]) => {
       const data = encodeData(batchedAddresses);
 
       return decode(['uint256[]'], await call(provider, contractAddress, data))[0];
@@ -75,14 +75,14 @@ export const callMultiple = async (
   provider: ProviderLike,
   addresses: string[],
   otherAddresses: string[],
-  encodeData: (addresses: string[], otherAddresses: string[]) => string,
+  encodeData: (addresses: string[] | number[], otherAddresses: string[]) => string,
   options?: EthScanOptions
 ): Promise<BalanceMap<BalanceMap>> => {
   const contractAddress = options?.contractAddress ?? CONTRACT_ADDRESS;
   const batchSize = options?.batchSize ?? BATCH_SIZE;
 
   const result = await batch(
-    async (batchedAddresses: string[]) => {
+    async (batchedAddresses: string[] | number[]) => {
       const data = encodeData(batchedAddresses, otherAddresses);
 
       return decode(['uint256[][]'], await call(provider, contractAddress, data))[0] as Array<Array<bigint>>;

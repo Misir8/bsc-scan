@@ -6,7 +6,9 @@ import {
   TOKEN_BALANCES_ID,
   TOKEN_BALANCES_TYPE,
   TOKENS_BALANCE_ID,
-  TOKENS_BALANCE_TYPE
+  TOKENS_BALANCE_TYPE,
+  PENDING_POOLS_AUTO_BALANCES_ID,
+  PENDING_POOLS_AUTO_BALANCES_TYPE
 } from './constants';
 import { ProviderLike } from './providers';
 import type { BalanceMap, EthScanOptions } from './types';
@@ -28,7 +30,7 @@ export const getEtherBalances = (
   return callSingle(
     provider,
     addresses,
-    (batch) => withId(ETHER_BALANCES_ID, encode(ETHER_BALANCES_TYPE, [batch])),
+    (batch) => withId(ETHER_BALANCES_ID, encode(ETHER_BALANCES_TYPE, [batch as any])),
     options
   );
 };
@@ -52,7 +54,7 @@ export const getTokenBalances = async (
   return callSingle(
     provider,
     addresses,
-    (batch) => withId(TOKEN_BALANCES_ID, encode(TOKEN_BALANCES_TYPE, [batch, tokenAddress])),
+    (batch) => withId(TOKEN_BALANCES_ID, encode(TOKEN_BALANCES_TYPE, [batch as any, tokenAddress])),
     options
   );
 };
@@ -98,7 +100,53 @@ export const getTokensBalance = (
   return callSingle(
     provider,
     tokenAddresses,
-    (batch) => withId(TOKENS_BALANCE_ID, encode(TOKENS_BALANCE_TYPE, [address, batch])),
+    (batch) => withId(TOKENS_BALANCE_ID, encode(TOKENS_BALANCE_TYPE, [address, batch as any])),
+    options
+  );
+};
+
+/**
+ * Get the pending AUTO token balances for multiple pools, for multiple addresses.
+ *
+ * @param {ProviderLike} provider
+ * @param {string[]} addresses
+ * @param {string[]} tokenAddresses
+ * @param {EthScanOptions} options
+ * @return {Promise<BalanceMap<BalanceMap>>}
+ */
+export const getPendingPoolsAUTOBalances = async (
+  provider: ProviderLike,
+  addresses: string[],
+  pids: number[],
+  options?: EthScanOptions
+): Promise<BalanceMap<BalanceMap>> => {
+  const balances = await Promise.all(
+    addresses.map(async (address) => Object.values(await getPendingPoolsAUTOBalance(provider, address, pids, options)))
+  );
+
+  return toNestedBalanceMap(addresses, pids, balances);
+};
+
+/**
+ * Get the ERC-20 token balance of the tokens with the addresses `tokenAddresses` for the single
+ * address specified.
+ *
+ * @param {ProviderLike} provider
+ * @param {string} address
+ * @param {string[]} tokenAddresses
+ * @param {EthScanOptions} options
+ * @return {Promise<BalanceMap>}
+ */
+export const getPendingPoolsAUTOBalance = (
+  provider: ProviderLike,
+  address: string,
+  pids: number[],
+  options?: EthScanOptions
+): Promise<BalanceMap> => {
+  return callSingle(
+    provider,
+    pids,
+    (batch) => withId(PENDING_POOLS_AUTO_BALANCES_ID, encode(PENDING_POOLS_AUTO_BALANCES_TYPE, [address, batch])),
     options
   );
 };
