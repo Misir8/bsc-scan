@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0x571C62a1c863aEAD01c1d34D8cB3Ee2c6f938800';
+export const CONTRACT_ADDRESS = '0x7E9f1Ee1905B5Bde9522c20bbb78bAbe3c3FB4ca';
 export const BATCH_SIZE = 1000;
 
 /**
