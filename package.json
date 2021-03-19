@@ -1,10 +1,10 @@
 {
-  "name": "@mycrypto/eth-scan",
+  "name": "@iam4x/bsc-scan",
   "version": "3.3.1",
-  "description": "An efficient Ether and token balance scanner",
+  "description": "An efficient BNB and token balance scanner",
   "keywords": [
-    "ethereum",
-    "ether",
+    "binance",
+    "bnb",
     "tokens",
     "balance",
     "scanner",
@@ -15,11 +15,12 @@
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "typings": "typings/src/index.d.ts",
-  "repository": "https://github.com/MyCryptoHQ/eth-scan.git",
+  "repository": "https://github.com/iam4x/eth-scan.git",
   "author": "MyCrypto",
   "contributors": [
     "Maarten Zuidhoorn <maarten@zuidhoorn.com>",
-    "Luit Hollander <luit@hollander.email> (https://luit.me)"
+    "Luit Hollander <luit@hollander.email> (https://luit.me)",
+    "Max Tyler <iam4x@me.com> (https://twitter.com/iam4x)"
   ],
   "license": "MIT",
   "files": [

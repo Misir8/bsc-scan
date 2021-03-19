@@ -1,6 +1,8 @@
-# eth-scan
+# bsc-scan
 
-`eth-scan` is a library written in TypeScript, to help you fetch Ether or (ERC-20) token balances for multiple addresses in an efficient way. The library uses a smart contract to fetch the balances in a single call to a node. The contract is currently deployed at [0x571C62a1c863aEAD01c1d34D8cB3Ee2c6f938800](https://etherscan.io/address/0x571C62a1c863aEAD01c1d34D8cB3Ee2c6f938800) on the Ethereum mainnet, Goerli, Kovan, Rinkeby, Ropsten, and xDai.
+> THIS IS A FORK OF https://github.com/MyCryptoHQ/eth-scan FOR THE BINANCE SMART CHAIN
+
+`bsc-scan` is a library written in TypeScript, to help you fetch BNB or (BEP-20) token balances for multiple addresses in an efficient way. The library uses a smart contract to fetch the balances in a single call to a node. The contract is currently deployed at [0x7E9f1Ee1905B5Bde9522c20bbb78bAbe3c3FB4ca](https://bscscan.com/address/0x7E9f1Ee1905B5Bde9522c20bbb78bAbe3c3FB4ca) on the Binance Smart Chain mainnet.
 
 It can use Web3.js, Ethers.js, JSON-RPC (HTTP), or an EIP-1193-compatible provider to get the balances. See [Getting Started](#getting-started) for more info.
 
@@ -11,19 +13,19 @@ It can use Web3.js, Ethers.js, JSON-RPC (HTTP), or an EIP-1193-compatible provid
 The library is published on npm. To install it, use `npm` or `yarn`:
 
 ```
-yarn add @mycrypto/eth-scan
+yarn add @iam4x/bsc-scan
 ```
 
 or
 
 ```
-npm install @mycrypto/eth-scan
+npm install @iam4x/bsc-scan
 ```
 
 ## Example
 
 ```typescript
-import { getEtherBalances } from '@mycrypto/eth-scan';
+import { getEtherBalances } from '@iam4x/bsc-scan';
 
 getEtherBalances('http://127.0.0.1:8545', [
   '0x9a0decaffb07fb500ff7e5d253b16892dbec006a',
@@ -112,7 +114,7 @@ A `BalanceMap` is an object with an address as key and a [bigint](https://develo
 
 ### Providers
 
-Currently, `eth-scan` has support for four different providers:
+Currently, `bsc-scan` has support for four different providers:
 
 * Ethers.js, by using an existing Ethers.js provider
 * Web3, by using an instance of the `Web3` class
@@ -121,6 +123,6 @@ Currently, `eth-scan` has support for four different providers:
 
 ## Compatiblity
 
-`eth-scan` uses ES6+ functionality, which may not be supported on all platforms. If you need compatibility with older browsers or Node.js versions, you can use something like [Babel](https://github.com/babel/babel).
+`bsc-scan` uses ES6+ functionality, which may not be supported on all platforms. If you need compatibility with older browsers or Node.js versions, you can use something like [Babel](https://github.com/babel/babel).
 
 There is an ES compatible version available, which should work with module bundlers like [Webpack](https://webpack.js.org/) and [Rollup](https://github.com/rollup/rollup).
